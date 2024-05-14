@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("./partials/header") %>
+<body>
+
+    <%- include('./partials/navbar') %>
+    <img src="../uploads/User-Profile.png" alt="">
+
+    <% if(locals.user){ %>
+    <h1>Welcome <%= locals.user %></h1>
+    <img src=<%= user.profilepic %> alt=<%= user.profilepic %>>
+    <% } %>
+
+
+    <%- include("./partials/footer") %>
+    
+</body>
+</html>
