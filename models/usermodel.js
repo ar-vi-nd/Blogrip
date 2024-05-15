@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const {Schema} = mongoose
 const saltRounds = 10
 const bcrypt = require('bcrypt')
+const { createjwt } = require('../services/authentication')
 
 
 const userSchema = new Schema({
@@ -33,13 +34,16 @@ userSchema.pre("save",async function(next){
 })
 
 userSchema.static("comparePassword",async function(email,password){
-    const user = await User.findOne({email})
+    const user = await User.findOne({email:email})
     if(!user)
-        return false
+        throw new Error("User Not Found");
     else{
         const match = await bcrypt.compare(password,user.password)
         if(match)
-        return {...user,password:undefined}
+            {
+              const token =  createjwt(user)
+              return token
+            }
         else
         return false
     }

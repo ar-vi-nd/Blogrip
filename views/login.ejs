@@ -6,7 +6,17 @@
 
     <%- include('./partials/navbar') %>
 
+    <div style="height: 75px;">
+        
+        <% if(locals.error) {%>
+            <div class="alert alert-danger" role="alert">
+                <%= locals.error %>
+            </div>
+            <% } %>
+            
+        </div>
     <form class="container" action="/login" method="post">
+        <h2>LOGIN</h2>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
           <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" required>
@@ -17,6 +27,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
       </form>
+
+    
 
 
     <%- include("./partials/footer") %>

@@ -5,8 +5,11 @@ const app = express()
 const port = 8080
 const mongoURI = "mongodb://127.0.0.1/Blogrip";
 const connecttodatabase = require('./dbconnect')
+const cookieparser = require('cookie-parser')
 
 connecttodatabase(mongoURI)()
+
+app.use(cookieparser())
 
 
 app.use(express.static(path.resolve('./public')))
