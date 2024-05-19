@@ -1,0 +1,40 @@
+<html lang="en">
+
+<%- include("./partials/header") %>
+<body>
+
+    <%- include('./partials/navbar') %>
+
+    <div class="container d-flex flex-wrap justify-content-between my-2">
+
+
+    <% if(locals.blogs){ %>
+
+        <% locals.blogs.forEach((blog) => { %>
+
+          <div class="card my-2" style="width: 22rem;">
+                <img src='<%= blog.coverpic %>' class="card-img-top" alt="...">
+                <div><%= blog.coverpic %></div>
+                <div class="card-body">
+                    <h5 class="card-title"><%= blog.title %></h5>
+                    <p class="card-text"><%= blog.description %></p>
+                    <a href="/<%=blog._id%>" class="btn btn-primary">Go somewhere</a>
+                    
+                </div>
+            </div>
+
+       <%  }) %>
+    <% } else {%>
+
+        <h2>No Blogs Here....</h2>
+
+        <% } %>
+
+</div>
+
+
+
+    <%- include("./partials/footer") %>
+    
+</body>
+</html>

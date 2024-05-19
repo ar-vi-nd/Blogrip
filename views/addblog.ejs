@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include("./partials/header") %>
+<body >
+
+    <%- include('./partials/navbar') %>
+
+    <div class="container">
+
+        
+        <h2>Add Blog</h2>
+
+    <form action="/api/blog" method="post" enctype="multipart/form-data" >
+        <input type="file" name="coverpic" id="coverpic" name="filename">
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" required>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Add Description" name="description" id="Description" style="height: 100px"></textarea>
+            <label for="description">Description</label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    
+    <%- include("./partials/footer") %>
+    
+</div>
+</body>
+</html>

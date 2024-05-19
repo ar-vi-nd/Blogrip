@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+
 const path = require('path')
 const app = express()
 const port = 8080
@@ -8,6 +9,9 @@ const connecttodatabase = require('./dbconnect')
 const cookieparser = require('cookie-parser')
 
 connecttodatabase(mongoURI)()
+
+
+
 
 app.use(cookieparser())
 
@@ -20,9 +24,12 @@ app.set('view engine','ejs')
 app.set('views','./views')
 
 const userroute = require('./routes/userroute')
+const blogroute = require('./routes/blogroute')
+const staticroute = require('./routes/staticroute')
 
-app.use('/', userroute)
-
+app.use('/',staticroute)
+app.use('/api/user', userroute)
+app.use('/api/blog',blogroute)
 
 
 app.listen(port , ()=>{console.log(`Server started at port ${port}`)})
