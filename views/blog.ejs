@@ -8,28 +8,27 @@
 
             <% if(locals.blog){ %>
 
-                <h2 class="container">Blogrip</h2>
+            
 
                 <div class="container">
+                    <h4 class="card-title">
+                        <%= locals.blog.title %>
+                    </h4>
 
 
 
                     <div class="card my-2" style="width: 50rem;">
+                        
                         <img src='<%= locals.blog.coverpic %>' class="card-img-top" alt="...">
-                        <div>
-                            <%= locals.blog.coverpic %>
-                        </div>
                         <div class="card-body">
-                            <h4 class="card-title">
-                                <%= locals.blog.title %>
-                            </h4>
+                          
                             <p class="card-text">
                                 <%= locals.blog.description %>
                             </p>
 
                             <h5>Created by : <%= locals.blog.createdBy.name %>
                             </h5>
-                            <h5>Date : <%= Date(locals.blog.updatedAt) %>
+                            <h5>Date : <%=(locals.blog.createdAt) %>
                             </h5>
 
                         </div>

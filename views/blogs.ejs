@@ -15,11 +15,11 @@
 
           <div class="card my-2" style="width: 22rem;">
                 <img src='<%= blog.coverpic %>' class="card-img-top" alt="...">
-                <div><%= blog.coverpic %></div>
+                <!-- <div><%= blog.coverpic %></div> -->
                 <div class="card-body">
                     <h5 class="card-title"><%= blog.title %></h5>
-                    <p class="card-text"><%= blog.description %></p>
-                    <a href="/<%=blog._id%>" class="btn btn-primary">Go somewhere</a>
+                    <p class="card-text"><%= blog.description.length>150?blog.description.slice(0,150)+"...":blog.description %></p>
+                    <a href="/<%=blog._id%>" class="btn btn-primary">Read more</a>
                     
                 </div>
             </div>
