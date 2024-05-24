@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get("/", fetchuser, async (req, res) => {
     try {
-        let blogs = await Blogs.find({})
+        let blogs = await Blogs.find({}).sort({'createdAt':-1})
         if(blogs.length===0){
             blogs = undefined
         }
@@ -16,25 +16,10 @@ router.get("/", fetchuser, async (req, res) => {
     } catch (error) {
         console.log("error fetching blogs : ",error)      
     }
-  })
-  .get("/:id",fetchuser,async(req,res)=>{
+  }).get("/:id",fetchuser,async(req,res)=>{
     try {
-        // console.log(typeof(req.params.id))
-
-        if(req.params.id==='favicon.ico'){
-            return res.status(404)
-        }
-        if(req.params.id.length!==24){
-            return res.render('blog',{user:req.user,error: "No such blog exist..."}) 
-
-        }
-        // so i need to write this condition because if user send a self written blogid as params
-        // it would check for its lengts . if length is less than 24 it will just send error
-        // as length should be 24 to cast sting to objectid in findOne or any such request
-
-
         let blog = await Blogs.findOne({_id:req.params.id})
-        if (blog){
+        if (blog.length!==0){
             let author = await blog.populate("createdBy")
             let comments = await Comments.find({blogId:req.params.id}).populate("createdBy")
         return res.render('blog',{blog:blog,user:req.user,comments:comments})      
@@ -43,7 +28,7 @@ router.get("/", fetchuser, async (req, res) => {
         else{
             return res.render('blog',{user:req.user,error: "No such blog exist..."}) 
         }
-
+       
         // here my first mistake was i was using find instead of findOne so i was getting an array of objects instead of object
         // also i wanted to also mention the creater name so i was confused how to do that
         // now  i have used 
@@ -54,7 +39,7 @@ router.get("/", fetchuser, async (req, res) => {
         // console.log(author)
         // console.log(comments)
     } catch (error) {
-        console.log("error fetching blog : ",error)      
+        console.log("error fetching blog in staticroute on .get('/:id') : ",error)      
     }
   }
 )
@@ -65,9 +50,5 @@ router.get("/", fetchuser, async (req, res) => {
 // then again i made same changes but now  i am not getting the same error
 // nope still getting same error
 
-// reason is browser is sending a req for favion and in params its sending a string
-// but we are searching in blogs array an object id and it isnt casting this string to object
-// but when we are sending a blogid as string it able to cast it to object 
-// dont know why
 
 module.exports = router;

@@ -2,22 +2,36 @@
 
 <%- include("./partials/header") %>
 
+<style>
+    #exampleInputComment{
+        width: 30vw;
+    }
+</style>
+
     <body>
 
         <%- include('./partials/navbar') %>
+
+        <% if (locals.error) {%>
+
+            <div class="container my-3">
+            <h2><%= locals.error %></h2>
+
+            <% } %>
+            </div>
 
             <% if(locals.blog){ %>
 
             
 
                 <div class="container my-3">
-                    <h4 class="card-title">
+                    <h2 class="card-title">
                         <%= locals.blog.title %>
-                    </h4>
+                    </h2>
 
 
 
-                    <div class="card my-2" style="width: 50rem;">
+                    <div class="card my-2" style="width: 35vw;">
                         
                         <img src='<%= locals.blog.coverpic %>' class="card-img-top" alt="...">
                         <div class="card-body">
@@ -31,6 +45,19 @@
                             <h5>Date : <%=(locals.blog.createdAt) %>
                             </h5>
 
+                            <% if(locals.user) {%>
+
+                                <form action="/api/blog/delete/<%= blog._id %>" method="POST" style="display:inline;">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger">DELETE</button>
+                                </form>
+
+        <%- include('./partials/editmodal') %>
+
+                                
+                                   
+                               <% } %>
+
                         </div>
                     </div>
 
@@ -39,7 +66,7 @@
                         <% if(locals.user){%>
                             <form action='/api/blog/<%=locals.blog._id%>' method="post">
                                 <div class="mb-3">
-                                    <input type="text" placeholder="Add your comment" class="form-control"
+                                    <input type="text" placeholder="Add your comment" class="form-control" 
                                         id="exampleInputComment" name="title" aria-describedby="emailHelp" required>
                                 </div>
 
@@ -53,6 +80,8 @@
                                     <% locals.comments.forEach(comment=>{%>
 
                                 <div class="my-2" style="width: 18rem;">
+
+                                    <% console.log(comment.createdBy.profilepic) %>
 
                                     <img src='<%= comment.createdBy.profilepic%>' width="50" alt="">
 

@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken')
-const JWT_secret = "mikethehacker"
+
+// I am able to access this process.env file anywhere in this project
+const JWT_secret = process.env.JWT_secret
 
 const createjwt = (user)=>{
 const payload = {_id:user.id,email:user.email,name:user.name,profilepic:user.profilepic}

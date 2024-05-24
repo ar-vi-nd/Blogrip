@@ -20,7 +20,7 @@ const userSchema = new Schema({
     },
     profilepic : {
         type : String,
-        default : '../uploads/User-Profile.png'
+        default : '/uploads/User-Profile.png'
     }
 
 })

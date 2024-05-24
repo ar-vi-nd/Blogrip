@@ -1,0 +1,64 @@
+<html lang="en">
+
+<%- include("./partials/header") %>
+
+<style>
+    #exampleInputComment{
+        width: 30vw;
+    }
+</style>
+
+    <body>
+
+        <%- include('./partials/navbar') %>
+
+        <% if (locals.error) {%>
+
+            <div class="container my-3">
+            <h2><%= locals.error %></h2>
+
+            <% } %>
+            </div>
+
+            <% if(locals.user){ %>
+
+            
+
+                <div class="container my-3">
+
+                    <h2>USER PROFILE</h2>
+                    
+                    <div class="card my-2" style="width: 25vw;">
+                        
+                        
+                        <img src='<%= user.profilepic %>' class="card-img-top" alt="...">
+                        <div class="card-body">
+
+                            <h2 class="card-title">
+                              Name :  <%= locals.user.name %>
+                            </h2>
+                            <h2 class="card-title">
+                              Email :  <%= locals.user.email %>
+                            </h2>
+
+                            <form action="/api/user/updateprofilepic" method="post" enctype="multipart/form-data" >
+                                
+                                <input type="file" name="profilepic" id="profilepic" name="filename">
+                
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                
+                            </form>
+
+
+                        </div>
+                    </div>
+
+                </div>
+                <% } %>
+
+
+                    <%- include("./partials/footer") %>
+
+    </body>
+
+</html>

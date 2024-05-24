@@ -20,5 +20,20 @@ const blogSchema = new Schema({
     }
 },{timestamps:true})
 
+
+// the blog will still get deleted if i dont write the pre function but 
+// its better to delete all the information related to this blog like comments
+
+
+blogSchema.pre('findOneAndDelete', async function(next) {
+    const blogId = this.getQuery()._id;
+    try {
+        await mongoose.model('comments').deleteMany({ blogId: blogId });
+        next();
+    } catch (err) {
+        next(err);
+    }
+});
+
 const Blogs = mongoose.model("blogs",blogSchema)
 module.exports = Blogs

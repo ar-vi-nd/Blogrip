@@ -1,7 +1,19 @@
 const express = require("express");
 const User = require("../models/usermodel");
+const multer  = require('multer')
 
 const { fetchuser } = require("../middlewares/authentication");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+   return cb(null, "./public/uploads/")
+  },
+  filename: function (req, file, cb) {
+   return cb(null, `${Date.now()}-${file.originalname}`)
+  }
+})
+
+const upload = multer({ storage: storage })
 
 const router = express.Router();
 
@@ -49,6 +61,29 @@ router
       console.error("Error creating user:", err);
       // Handle other errors
     }
+  })
+  .get('/userprofile',fetchuser,async(req,res)=>{
+    console.log(req.user)
+    const {name,email,profilepic}= req.user
+
+    res.render('userprofile',{user:{name,email,profilepic}})
+  })
+  .post('/updateprofilepic',fetchuser,upload.single('profilepic'),async(req,res)=>{
+    
+    if(req.file){
+
+
+      const{filename} = req.file
+      let updateduser = await User.findByIdAndUpdate({_id:req.user._id},{$set:{profilepic:'/uploads/'+filename}},{new:true})
+      return res.redirect('/userprofile')
+    }
+    else{
+      const {name,email,profilepic}= req.user
+      return res.render('userprofile',{user:{name,email,profilepic}})
+    }
+
+
+
   })
 
   .get("/logout", (req, res) => {
